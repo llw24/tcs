@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇游戏</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .score-container {
+            display: flex;
+            gap: 30px;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        canvas {
+            border: 2px solid #333;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 500px;
+            height: 500px;
+        }
+        .controls {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .direction-controls {
+            margin-top: 10px;
+        }
+        .direction-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(3, 60px);
+            gap: 5px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        .direction-btn {
+            width: 60px;
+            height: 60px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .direction-btn:hover {
+            background-color: #45a049;
+        }
+        .direction-btn:active {
+            transform: scale(0.95);
+        }
+        .up-btn { grid-column: 2; grid-row: 1; }
+        .down-btn { grid-column: 2; grid-row: 3; }
+        .left-btn { grid-column: 1; grid-row: 2; }
+        .right-btn { grid-column: 3; grid-row: 2; }
+        .game-over {
+            display: none;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 1000;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="score-container">
+            <div class="score">分数: <span id="score">0</span></div>
+            <div class="high-score">最高分: <span id="highScore">0</span></div>
+        </div>
+        <div class="controls">
+            <div class="speed-control">
+                <span>速度:</span>
+                <input type="range" min="1" max="100" value="67" onchange="updateGameSpeed(this.value)">
+            </div>
+            <button id="clearButton" onclick="clearRecord()">清除记录</button>
+        </div>
+        <canvas id="gameCanvas" width="500" height="500"></canvas>
+        <div class="game-tips">使用方向键或下方按钮控制蛇的移动</div>
+        <div class="direction-controls">
+            <button class="direction-btn up-btn" data-key="ArrowUp">↑</button>
+            <button class="direction-btn left-btn" data-key="ArrowLeft">←</button>
+            <button class="direction-btn right-btn" data-key="ArrowRight">→</button>
+            <button class="direction-btn down-btn" data-key="ArrowDown">↓</button>
+        </div>
+    </div>
+    <div id="gameOver" class="game-over">
+        <h2>游戏结束!</h2>
+        <p>最终分数: <span id="finalScore">0</span></p>
+        <p>最高分: <span id="finalHighScore">0</span></p>
+        <button onclick="startGame()">重新开始</button>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
